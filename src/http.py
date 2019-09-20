@@ -21,8 +21,9 @@ async def worker(name, queue, results):
             print(f"Fetching {name}: {url}")
         future_result = loop.run_in_executor(None, fetch, url) #schedule request w/ url
         result = await future_result
+        results.append(result)
         queue.task_done()
-
+    
 
 async def distribute_work(url, requests, concurrency, results):
     """Divide up the work and collect results"""
@@ -34,7 +35,6 @@ async def distribute_work(url, requests, concurrency, results):
     tasks = [] #create a list to hold our task instances/workers
     for i in range(concurrency):
         task = asyncio.create_task(worker(f"worker-{i+1}", queue, results))
-        print(task)
         tasks.append(task)
 
     started_at = time.monotonic()
@@ -51,4 +51,4 @@ def entrypoint(url, requests, concurrency):
     """Here we create a list to store our results then spin off our function to start the work in asyncio.run()"""
     results = []
     total_time = asyncio.run(distribute_work(url, requests, concurrency, results))
-    return total_time
+    return (total_time, results)
