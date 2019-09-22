@@ -4,33 +4,33 @@
 
 Simplify load testing in a quick and orderly fashion from your fingertips in your terminal workspace. This is not ready for use.
 
+###  Coming to Pypi soon
 
+sample command
+```
+storm -r 100 -c 10 https://google.com 
+```
+> Initial Output
 
 ```
- Successful requests     3000
-    Slowest                 0.010s
-    Fastest                 0.001s
-    Average                 0.003s
-    Total time              2.400s
-    Requests Per Minute     90000
-    Requests Per Second     125
+.... Running!
+Requests: 100
+Concurrency: 10
+JSON File: None
+URL: https://google.com
 ```
 
 
+> When complete
 
 ```
-Failed example:
-    results.successful_requests()
-Expected:
-    2
-Got nothing
-**********************************************************************
-6 items had failures:
-   1 of   2 in stats.Results.average
-   1 of   2 in stats.Results.fastest
-   1 of   2 in stats.Results.request_per_min
-   1 of   2 in stats.Results.request_per_sec
-   2 of   2 in stats.Results.slowest
-   1 of   2 in stats.Results.successful_requests
-***Test Failed*** 7 failures.
+.... Done!
+--- Results ---
+Slowest                 1.446800993s
+Fastest                 0.4680411059999998s
+Average                 0.644037188s
+Total Time              7.283678078s
+Requests Per Min        824s
+Requests Per Sec        14s
 ```
+
