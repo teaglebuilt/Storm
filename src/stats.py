@@ -19,7 +19,6 @@ class Results:
     def __init__(self, total_time: float, requests: List[Dict]):
         self.total_time = total_time
         self.requests = sorted(requests, key=lambda r: r["request_time"])
-        print(self.requests)
 
     def slowest(self) -> float:
         """
@@ -77,3 +76,47 @@ class Results:
         3.513333333333333
         """
         return mean([r["request_time"] for r in self.requests])
+
+    def requests_per_min(self) -> int:
+        """
+        Returns the number of requests made per minute
+
+        >>> results = Results(10.6, [{
+        ...     'status_code': 200,
+        ...     'request_time': 3.4
+        ... }, {
+        ...     'status_code': 500,
+        ...     'request_time': 6.1
+        ... }, {
+        ...     'status_code': 200,
+        ...     'request_time': 1.04
+        ... }])
+        >>> results.requests_per_minute()
+        17
+        """
+        # 3 / 10.6 = x / 60
+        # 60 * 3 / 10.6 = x
+        return round(60 * len(self.requests) / self.total_time)
+
+    def requests_per_sec(self) -> float:
+        """
+        Returns the number of requests made per second
+
+        >>> results = Results(3.5, [{
+        ...     'status_code': 200,
+        ...     'request_time': 3.4
+        ... }, {
+        ...     'status_code': 500,
+        ...     'request_time': 2.9
+        ... }, {
+        ...     'status_code': 200,
+        ...     'request_time': 1.04
+        ... }, {
+        ...     'status_code': 200,
+        ...     'request_time': 0.4
+        ... }])
+        >>> results.requests_per_second()
+        1
+        """
+        # 4 / 3.5 = x / 1
+        return round(len(self.requests) / self.total_time)

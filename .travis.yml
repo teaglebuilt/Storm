@@ -1,0 +1,12 @@
+sudo: false
+
+language: python
+
+python:
+  - "3.7"
+
+install: 
+  - pip install -r requirements-dev.txt
+  - pip install --editable .
+
+script: tox -vv
